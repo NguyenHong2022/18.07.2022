@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- saved from url=(0108)http://localhost:63342/Code/test-18.07/2.HSLA.html?_ijt=1m72ndvrg5fs8b3o22mm8vv0vv&_ij_reload=RELOAD_ON_SAVE -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>HSLA</title>
+  <style type="text/css">
+      body {
+          background-color: #c8c8c8;
+          color: white;
+          padding: 20px;
+          font-family: Arial,Verdana,sans-serif;
+      }
+      h1 {background-color: darkcyan; padding: inherit;}
+      h2 {background-color: #ee3e80; padding: inherit;}
+      p {
+          background-color: #ffffff;
+          background-color: hsla(0,100%,100%,0.5);
+          color: #64645A;
+          padding: inherit;
+      }
+
+  </style>
+</head>
+<body>
+    <h1>Marine Biology</h1>
+    <h2>The Composition of Seawater</h2>
+    <p>Almost anything can be found in seawater. This includes dissolved materials from Earth's crust as well as materials relessed from organisma.</p>
+
+<script>
+(function() {
+  var ws = new WebSocket('ws://' + window.location.host + 
+             '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+             'referrer=' + encodeURIComponent(window.location.pathname));
+  ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+          window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+          var messageId = msg.data.substring(11);
+          var links = document.getElementsByTagName('link');
+          for (var i = 0; i < links.length; i++) {
+              var link = links[i];
+              if (link.rel !== 'stylesheet') continue;
+              var clonedLink = link.cloneNode(true);
+              var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+              if (newHref !== link.href) {
+                clonedLink.href = newHref;
+              }
+              else {
+                var indexOfQuest = newHref.indexOf('?');
+                if (indexOfQuest >= 0) {
+                  // to support ?foo#hash 
+                  clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' + 
+                                    newHref.substring(indexOfQuest + 1);
+                }
+                else {
+                  clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+                }
+              }
+              link.replaceWith(clonedLink);
+          }
+      }
+  };
+})();
+</script></body></html>
